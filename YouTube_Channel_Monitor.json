@@ -1,0 +1,201 @@
+{
+  "name": "YouTube Channel Monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3bc02956-993b-4553-9235-a84aa60e2d21",
+              "name": "Text",
+              "value": "=New video alert! 🎬  Title: {{$json.title}}  Watch now: {{$json.link}}  Published at: {{$json.isoDate}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "839cd16a-e745-4f10-a956-ad1dcb07ff9e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "sumanthnallandhigal@gmail.com",
+        "subject": "Apologies for the Earlier Emails – Final Version Now Working",
+        "message": "=\nHere’s a quick look at the final working setup I created:<br><br>\n💻 <strong>To view the workflow screenshot clearly, please open this email on a laptop or desktop.</strong><br><br>\n<img src=\"https://i.imgur.com/hqGflbt.png\" width=\"600\" />\n\n<hr><br>\n\n{{$json[\"Text\"]}}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "65178cf2-941c-432d-8503-1a900cea4baa",
+      "name": "Gmail",
+      "webhookId": "eca4e658-c959-49e2-bf1a-602e591b9f7a",
+      "retryOnFail": false,
+      "maxTries": 2,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s4EI7aSC1Tp8p3Ty",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -100,
+        0
+      ],
+      "id": "79737634-8e15-4746-8847-2aaf7b41133e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCnnQ3ybuyFdzvgv2Ky5jnAA",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        60,
+        -220
+      ],
+      "id": "8106b182-e058-4aa2-8147-5f02cd7c01ed",
+      "name": "RSS Read",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "jsCode": "return [items[0]];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        -280
+      ],
+      "id": "356232af-bf30-45eb-ae5e-c0536822bfb7",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        660,
+        0
+      ],
+      "id": "731e6c40-0aab-474f-80ef-a54c7f835735",
+      "name": "END"
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "timestamp": "2025-04-30T07:03:27.956-04:00",
+          "Readable date": "April 30th 2025, 7:03:27 am",
+          "Readable time": "7:03:27 am",
+          "Day of week": "Wednesday",
+          "Year": "2025",
+          "Month": "April",
+          "Day of month": "30",
+          "Hour": "07",
+          "Minute": "03",
+          "Second": "27",
+          "Timezone": "America/Toronto (UTC-04:00)"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "END",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fc769711-1c51-410d-9c72-dc549caa25be",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9ea3aa05b8a8884b61c0f5e1affda4d8e5bdb2e2276cfe0048357755bba954a9"
+  },
+  "id": "qBZDnvV4zVf3bQPX",
+  "tags": []
+}
