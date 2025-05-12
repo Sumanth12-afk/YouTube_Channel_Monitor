@@ -86,6 +86,8 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCnnQ3ybuyFdzvgv2Ky5jnAA
 Follow these steps to install and use the workflow in your n8n environment:
 
 ### 1. **Import the Workflow**
+
+👉 **Note:** This repository already includes the `YouTube_Channel_Monitor.json` file. You can download it and upload directly into your n8n instance without creating the workflow manually.
 - Open your n8n instance
 - Go to **Workflows > Import from File**
 - Upload `YouTube_Channel_Monitor.json`
